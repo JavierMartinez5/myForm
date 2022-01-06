@@ -1,0 +1,119 @@
+<form  class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="form-control">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>First name</mat-label>
+      <input matInput
+        formControlName="firstName"
+      >
+      <mat-error *ngIf="form.get('firstName')?.errors?.required">
+        First name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  
+  <div class="form-control">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Last name</mat-label>
+      <input matInput
+        formControlName="lastName"
+      >
+      <mat-error *ngIf="form.get('lastName')?.errors?.required">
+        Last name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  
+  <div class="form-control">
+    <mat-form-field appearance="fill" class="example-form-field" class="form-field">
+      <mat-label>Choose date of your birthday</mat-label>
+      <input matInput [matDatepicker]="datepicker" formControlName="dateOfBirth">
+      <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+      <mat-datepicker #datepicker>
+        <mat-datepicker-actions>
+          <button mat-button matDatepickerCancel>Cancel</button>
+          <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+        </mat-datepicker-actions>
+      </mat-datepicker>
+      <mat-error *ngIf="form.get('dateOfBirth')?.errors?.required">
+        Date of birth is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-control">
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Frameworks</mat-label>
+      <mat-select formControlName="framework">
+        <mat-option *ngFor="let framework of frameworks" value="{{framework}}">{{framework}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('framework')?.errors?.required">
+        Frame name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  
+
+  <div class="form-control">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Choose an option</mat-label>
+      <mat-select [disabled]="!form.get('framework')?.value">
+        <mat-option *ngFor="let frameworkVersion of getFrameworkVersions()" value="{{frameworkVersion}}">{{frameworkVersion}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('frameworkVersion')?.errors?.required">
+        Frame version is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-control">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Email</mat-label>
+      <input matInput
+        formControlName="email"
+      >
+      <mat-error *ngIf="form.get('email')?.errors?.email">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="form.get('email')?.errors?.required">
+        Email is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('email')?.errors?.uniqueEmail">
+        {{form.get('email')?.value}} already has been taken!
+      </mat-error>
+    </mat-form-field>
+  </div>
+  
+  <div formGroupName="hobbies">
+    <div class="form-control hobby" *ngFor="let hobbyGroup of formHobbies.controls; let i = index" [formGroupName]="i">
+      <div>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Hobby name</mat-label>
+          <input matInput
+            formControlName="name"
+          >
+          <mat-error *ngIf="form.get('name')?.errors?.required">
+            Hobby name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Duration</mat-label>
+          <input matInput 
+            type="number"
+            formControlName="duration"
+          >
+          <mat-hint align="start"><strong>Duration in months</strong> </mat-hint>
+          <mat-error *ngIf="form.get('duration')?.errors?.required">
+            Duration is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <button mat-raised-button color="primary" (click)="addHobbyGroup()">Add {{formHobbies.controls.length + 1}}-th hobby</button>
+    </div>
+  </div>
+  
+</form>
