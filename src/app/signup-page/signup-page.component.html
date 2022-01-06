@@ -47,7 +47,7 @@
         <mat-option *ngFor="let framework of frameworks" value="{{framework}}">{{framework}}</mat-option>
       </mat-select>
       <mat-error *ngIf="form.get('framework')?.errors?.required">
-        Frame name is <strong>required</strong>
+        Framework name is <strong>required</strong>
       </mat-error>
     </mat-form-field>
   </div>
@@ -55,9 +55,9 @@
 
   <div class="form-control">
     <mat-form-field appearance="fill" class="form-field">
-      <mat-label>Choose an option</mat-label>
-      <mat-select [disabled]="!form.get('framework')?.value">
-        <mat-option *ngFor="let frameworkVersion of getFrameworkVersions()" value="{{frameworkVersion}}">{{frameworkVersion}}</mat-option>
+      <mat-label>Choose version</mat-label>
+      <mat-select [disabled]="!form.get('framework')?.value" formControlName="frameworkVersion">
+        <mat-option *ngFor="let frameworkVersion of fVersions" [value]="frameworkVersion">{{frameworkVersion}}</mat-option>
       </mat-select>
       <mat-error *ngIf="form.get('frameworkVersion')?.errors?.required">
         Frame version is <strong>required</strong>
@@ -115,5 +115,5 @@
       <button mat-raised-button color="primary" (click)="addHobbyGroup()">Add {{formHobbies.controls.length + 1}}-th hobby</button>
     </div>
   </div>
-  
+  <button type="submit" [disabled]="form.invalid" mat-raised-button color="accent" (click)="submit()">Submit Form</button>
 </form>

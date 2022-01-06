@@ -14,13 +14,13 @@ export class ValidationRequestsService {
 
   constructor(private http: HttpClient) { }
 
-  public checkIsUniqueEmail(email: string): Observable<UniqueEmail | null> {
+  public checkIsUniqueEmail(email: string): Observable<boolean> {
     // return this.http.post('someRoute', email)
 
     if (email === 'test@test.test') {
-      return of({uniqueEmail: true}).pipe(delay(2000))
+      return of(true).pipe(delay(2000))
     }
-    return of(null).pipe(delay(2000))
+    return of(false).pipe(delay(2000))
   }
 
 }

@@ -51,17 +51,23 @@ export class SignupPageComponent implements OnInit {
     const hobbyGroup = new FormGroup({
       name: new FormControl('', [Validators.required]),
       duration: new FormControl('', [Validators.required])
-    })
-    // (<FormArray>this.form.get('hobbies')).push(control);
+    });
+    // (<FormArray>this.form.get('hobbies')).push(hobbyGroup);
     const field = this.form.get('hobbies') as FormArray
     field.push(hobbyGroup)
   }
 
   public submit() {
-
+    if (this.form.valid) {
+      const formValueForConsole = JSON.parse(JSON.stringify(this.form.value))
+      console.log('formValue : ', formValueForConsole);
+    } else {
+      return
+    }
+    this.form.reset();
   }
 
-  public getFrameworkVersions(): string[] {
+  public get fVersions() {
     const selectedFramework = this.form.get('framework')?.value as frameworks
     return this.frameworkVersions[selectedFramework]
   }
